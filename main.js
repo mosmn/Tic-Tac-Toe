@@ -33,7 +33,6 @@ const Player = (sign) => {
         getSign
     };
 }
-
 // const minmaxAiLogic = (() => {
 // })();
 
