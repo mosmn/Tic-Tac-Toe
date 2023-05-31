@@ -1,7 +1,7 @@
 const gameBoard = (() => {
 })();
 
-const Player =  (() => {
+const Player =  ((sign) => {
 })();
 
 const minmaxAiLogic = (() => {
