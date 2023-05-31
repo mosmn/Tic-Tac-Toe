@@ -27,10 +27,13 @@ const Player = (sign) => {
     this.sign = sign;
     const getSign = () => sign;
 
-    // const changeSign = () => {};
+    const changeSign = (newSign) => {
+        sign = newSign;
+    };
 
     return {
-        getSign
+        getSign,
+        changeSign
     };
 }
 // const minmaxAiLogic = (() => {
@@ -40,6 +43,10 @@ const gameController = (() => {
     const player1 = Player('X');
     const player2 = Player('O');
     let currentPlayer = player1;
+
+    const getplayer1 = () => player1;
+    const getplayer2 = () => player2;
+    const getcurrentPlayer = () => currentPlayer;
 
     const switchPlayer = () => {
         if (currentPlayer === player1) {
@@ -52,9 +59,9 @@ const gameController = (() => {
 
     const checkWin = (board) => {
         const winningCombos = [
-            [0, 1, 2], [3, 4, 5], [6, 7, 8], // horizontal
-            [0, 3, 6], [1, 4, 7], [2, 5, 8], // vertical
-            [0, 4, 8], [2, 4, 6] // diagonal
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], 
+            [0, 3, 6], [1, 4, 7], [2, 5, 8], 
+            [0, 4, 8], [2, 4, 6] 
         ];
 
         for (let i = 0; i < winningCombos.length; i++) {
@@ -88,7 +95,10 @@ const gameController = (() => {
 
     return {
         play,
-        switchPlayer
+        switchPlayer,
+        getplayer1,
+        getplayer2,
+        getcurrentPlayer
     };
 })();
 
@@ -96,6 +106,7 @@ const displayController = (() => {
     const cells = document.querySelectorAll('.cell');
     const message = document.querySelector('.message');
     const resetBtn = document.querySelector('#restart');
+    const signChoice = document.querySelector('#menu');
 
     cells.forEach(cell => {
         cell.addEventListener('click', (e) => {
@@ -126,6 +137,12 @@ const displayController = (() => {
     }
 
     resetBtn.addEventListener('click', reset);
+
+    signChoice.addEventListener('change', (e) => {
+        const sign = e.target.value;
+        gameController.getcurrentPlayer().changeSign(sign);
+        reset();
+    });
 
     return {
         displayMessage,

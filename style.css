@@ -84,18 +84,16 @@ select:-moz-focusring {
 
 .board {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
     grid-gap: 5px;
     background-color: #444;
-    padding: 0px;
     width: 350px;
     height: 350px;
 }
 
 .cell {
     background-color: #fff;
-    padding: 0px;
+    padding: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
