@@ -19,6 +19,7 @@ const gameBoard = (() => {
         getCell,
         setCell,
         getBoard,
+        resetBoard
     };
 })();
 
@@ -83,12 +84,12 @@ const gameController = (() => {
                 displayController.displayMessage('Tie!');
                 return;
             }
-            switchPlayer();
         }
     }
 
     return {
         play,
+        switchPlayer
     };
 })();
 
@@ -101,6 +102,7 @@ const displayController = (() => {
         cell.addEventListener('click', (e) => {
             const cell = e.target.id;
             gameController.play(cell);
+            gameController.switchPlayer();
         });
     });
 
@@ -121,6 +123,7 @@ const displayController = (() => {
     const reset = () => {
         resetMessage();
         resetBoard();
+        gameBoard.resetBoard();
     }
 
     resetBtn.addEventListener('click', reset);
