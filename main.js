@@ -1,45 +1,35 @@
-// For controlling the board cells
 const gameBoard = (() => {
     let board = new Array(9);
 
-    const setElement = (index, sign) => {
+    const getCell = (index) => board[index];
+
+    const setCell = (index, sign) => {
+        const cell = document.getElementById(index);
+        cell.textContent = sign;
         board[index] = sign;
     }
-    return {setElement};
-})();
 
-const Player =  (() => {
-    let value = document.getElementById("menu").value;
-    
-    const getSign = () => value;
-
-    const setSign = (value) => {
-        sign = value;
+    const resetBoard = () => {
+        board = new Array(9);
     }
-    return {getSign, setSign};
+
+    return {getCell, setCell, resetBoard};
 })();
 
-const minmaxAiLogic = (() => {
-})();
+const Player = (sign) => {
+    this.sign = sign;
+    const getSign = () => sign;
 
-// For determining the game logic
+    const changeSign = () => {};
+    
+    return {getSign};
+}
+
+// const minmaxAiLogic = (() => {
+// })();
+
 const gameController = (() => {
 })();
 
-// For DOM manipulation
 const displayController = (() => {
-    let cells = document.querySelectorAll(".cell");
-
-    const render = () => {
-        cells.forEach(cell => {
-            cell.addEventListener("click", () => {
-                cell.textContent = Player.getSign();
-            });
-        });
-    }
-    
-    cells.addEventListener("click", () => {
-        render();
-    });
-    return {render};
 })();
