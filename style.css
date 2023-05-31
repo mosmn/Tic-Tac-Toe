@@ -5,6 +5,17 @@ body {
     min-height: 100vh;
   }
 
+.difficulty {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: sans-serif;
+    width: 100%;
+}
+
 .container {
     display: flex;
     flex-direction: column;
