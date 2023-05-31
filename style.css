@@ -73,7 +73,7 @@ select:focus {
         5px 5px,
         1px 1.5em;
     background-repeat: no-repeat;
-    border-color: green;
+    border-color: rgb(215, 215, 215);
     outline: 0;
 }
 
