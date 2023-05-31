@@ -48,6 +48,29 @@ const Player = (sign) => {
     };
 }
 const minmaxAiLogic = (() => {
+    const findBestMove = (moves, player) => {
+        let bestMove;
+        if (player === gameController.getplayer2()) {
+            let bestScore = -10000;
+            for (let i = 0; i < moves.length; i++) {
+                if (moves[i].score > bestScore) {
+                    bestScore = moves[i].score;
+                    bestMove = i;
+                }
+            }
+        }
+        else {
+            let bestScore = 10000;
+            for (let i = 0; i < moves.length; i++) {
+                if (moves[i].score < bestScore) {
+                    bestScore = moves[i].score;
+                    bestMove = i;
+                }
+            }
+        }
+        return moves[bestMove];
+    }
+    
     const minmax = (board, player) => {
         let availableCells = gameBoard.getEmptyCells();
 
@@ -66,21 +89,20 @@ const minmaxAiLogic = (() => {
         for (let i = 0; i < availableCells.length; i++) {
             let move = {};
             move.index = board[availableCells[i]];
-            board[availableCells[i]] = currentPlayer.getSign();
+            board[availableCells[i]] = player.getSign();
 
-            if (currentPlayer === gameController.getplayer2()) {
+            if (player === gameController.getplayer2()) {
                 let result = minmax(board, gameController.getplayer1());
                 move.score = result.score;
             }
             else {
                 let result = minmax(board, gameController.getplayer2());
                 move.score = result.score;
-            }
-
+            }   
             board[availableCells[i]] = move.index;
-
             moves.push(move);
         }
+        return findBestMove(moves, player);
     }
 
 })();
