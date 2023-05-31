@@ -15,11 +15,22 @@ const gameBoard = (() => {
         board = new Array(9);
     }
 
+    const getEmptyCells = () => {
+        const emptyCells = [];
+        for (let i = 0; i < board.length; i++) {
+            if (board[i] === undefined) {
+                emptyCells.push(i);
+            }
+        }
+        return emptyCells;
+    }
+
     return {
         getCell,
         setCell,
         getBoard,
-        resetBoard
+        resetBoard,
+        getEmptyCells
     };
 })();
 
@@ -36,8 +47,43 @@ const Player = (sign) => {
         changeSign
     };
 }
-// const minmaxAiLogic = (() => {
-// })();
+const minmaxAiLogic = (() => {
+    const minmax = (board, player) => {
+        let availableCells = gameBoard.getEmptyCells();
+
+        if (gameController.checkWin(board) === gameController.getplayer1().getSign()) {
+            return {score: -10};
+        }
+        else if (gameController.checkWin(board) === gameController.getplayer2().getSign()) {
+            return {score: 10};
+        }
+        else if (availableCells.length === 0) {
+            return {score: 0};
+        }
+
+        let moves = [];
+
+        for (let i = 0; i < availableCells.length; i++) {
+            let move = {};
+            move.index = board[availableCells[i]];
+            board[availableCells[i]] = currentPlayer.getSign();
+
+            if (currentPlayer === gameController.getplayer2()) {
+                let result = minmax(board, gameController.getplayer1());
+                move.score = result.score;
+            }
+            else {
+                let result = minmax(board, gameController.getplayer2());
+                move.score = result.score;
+            }
+
+            board[availableCells[i]] = move.index;
+
+            moves.push(move);
+        }
+    }
+
+})();
 
 const gameController = (() => {
     const player1 = Player('X');
@@ -81,8 +127,7 @@ const gameController = (() => {
         }
         return true;
       };
-           
-    
+              
     const play = (cell) => {
         const board = gameBoard.getBoard();
         if (board[cell] === undefined) {
