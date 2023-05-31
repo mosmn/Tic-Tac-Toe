@@ -74,9 +74,15 @@ const gameController = (() => {
     }
 
     const checkTie = (board) => {
-        return board.every(cell => cell !== undefined);
-    }
-
+        for (let i = 0; i < board.length; i++) {
+          if (board[i] === undefined || board[i] === '') {
+            return false;
+          }
+        }
+        return true;
+      };
+           
+    
     const play = (cell) => {
         const board = gameBoard.getBoard();
         if (board[cell] === undefined) {
@@ -84,10 +90,12 @@ const gameController = (() => {
             const winner = checkWin(board);
             if (winner) {
                 displayController.displayMessage(`${winner} wins!`);
+                displayController.endGame();
                 return;
             }
             if (checkTie(board)) {
                 displayController.displayMessage('Tie!');
+                displayController.endGame();
                 return;
             }
         }
@@ -108,13 +116,23 @@ const displayController = (() => {
     const resetBtn = document.querySelector('#restart');
     const signChoice = document.querySelector('#menu');
 
-    cells.forEach(cell => {
-        cell.addEventListener('click', (e) => {
-            const cell = e.target.id;
-            gameController.play(cell);
-            gameController.switchPlayer();
+    const handleClick = (e) => {
+        const cell = e.target.id;
+        gameController.play(cell);
+        gameController.switchPlayer();
+      };
+
+      const startGame = () => {
+        cells.forEach((cell) => {
+            cell.addEventListener('click', handleClick);
+          });
+        };
+    
+      const endGame = () => {
+        cells.forEach((cell) => {
+          cell.removeEventListener('click', handleClick);
         });
-    });
+      };
 
     const displayMessage = (msg) => {
         message.textContent = msg;
@@ -134,6 +152,7 @@ const displayController = (() => {
         resetMessage();
         resetBoard();
         gameBoard.resetBoard();
+        startGame();
     }
 
     resetBtn.addEventListener('click', reset);
@@ -148,5 +167,9 @@ const displayController = (() => {
         displayMessage,
         resetMessage,
         resetBoard,
+        startGame,
+        endGame
     };
 })();
+
+displayController.startGame();
