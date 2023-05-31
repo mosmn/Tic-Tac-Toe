@@ -8,7 +8,7 @@ body {
 .difficulty {
     position: absolute;
     top: 20px;
-    left: 20px;
+    left: 100px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -88,13 +88,15 @@ select:-moz-focusring {
     grid-gap: 5px;
     background-color: #444;
     padding: 0px;
+    width: 300px;
+    height: 300px;
 }
 
 .cell {
     background-color: #fff;
-    padding: 50px;
+    padding: 30px;
     text-align: center;
-    font-size: 50px;
+    font-size: 30px;
     cursor: pointer;
 }
 
